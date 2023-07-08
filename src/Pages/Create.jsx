@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { ReducerContext } from "../Context/TaskContext";
 
 const Create = () => {
-  const handleCreate = () => {};
+  const [data, setData] = useState({ title: "", description: "" });
+  const dispatch = useContext(ReducerContext);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
+
+  const handleCreate = () => {
+    dispatch({
+      type: "Create",
+      title: data.title,
+      description: data.description,
+    });
+  };
   return (
     <div>
       <div className="flex flex-col gap-5 items-center">
         <input
+          name="title"
+          value={data.title}
+          onChange={handleChange}
           placeholder="Title"
           type="text"
           className="border w-[20rem] border-slate-300 rounded-[0.22rem] px-2 caret-indigo-500 outline-none focus:ring-1 ring-sky-500/50 py-2 focus:border-sky-500 md:w-[44rem]"
         />
         <textarea
+          name="description"
+          value={data.description}
+          onChange={handleChange}
           placeholder="Description"
           className="resize-none border w-[20rem] border-slate-300 rounded-[0.22rem] px-2 caret-indigo-500 outline-none focus:ring-1 ring-sky-500/50 py-2 focus:border-sky-500 md:w-[44rem]"
           rows={10}

@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "./Modal";
+import { ReducerContext } from "../Context/TaskContext";
 
-const Task = () => {
+const Task = ({ item, index }) => {
   const [modal, setModal] = useState(false);
   const [color, setColor] = useState(
     "border-2 border-red-300 text-red-700 outline-none px-2 text-sm rounded-[0.2rem]"
   );
+  const dispatch = useContext(ReducerContext);
 
-  const handleDelete = () => {};
+  const handleDelete = (key) => {
+    dispatch({
+      type: "Delete",
+      id: key,
+    });
+  };
   const handleColor = (e) => {
     if (e.target.value == "To Do")
       setColor(
@@ -25,17 +32,12 @@ const Task = () => {
   return (
     <>
       {modal && <Modal setModal={setModal} modal={modal} />}
-      <div className="dropdown-container w-[20rem] space-y-3 p-2 border-t-4 border-indigo-300/80 shadow-md rounded-bl-md rounded-br-md lg:hover:shadow-xl transition ease-in-out">
+      <div className="dropdown-container w-[20rem] space-y-4 p-2 border-t-4 border-indigo-300/80 shadow-md rounded-bl-md rounded-br-md lg:hover:shadow-xl transition ease-in-out">
         <h1 className="bg-indigo-100/80 text-[1.04rem] w-fit px-2 py-1 rounded-lg font-semibold text-gray-700">
-          Make Design
+          {item.title}
         </h1>
 
-        <p className="text-[0.99rem] text-gray-700">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis
-          rerum itaque dolor earum officia consectetur dicta voluptatem eaque
-          suscipit quae maxime labore, quas doloribus commodi ipsam odit.
-          Beatae, repudiandae excepturi.
-        </p>
+        <p className="text-[0.99rem] text-gray-700">{item.description}</p>
         <div className="flex justify-between ">
           <select className={color} onChange={handleColor}>
             <option value="To Do" className="text-red-500 bg-red-50">
@@ -75,7 +77,7 @@ const Task = () => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              onClick={handleDelete}
+              onClick={() => handleDelete(index)}
             >
               <path
                 strokeLinecap="round"
