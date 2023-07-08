@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dropdown-container select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.dropdown-container select::-ms-expand {
+  display: none;
+}
