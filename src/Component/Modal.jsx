@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { ReducerContext, TasksContext } from "../Context/TaskContext";
 
-const Modal = ({ setModal, modal }) => {
+const Modal = ({ setModal, modal, item, id }) => {
+  const [data, setData] = useState({ title: "", description: "" });
+  useEffect(() => {
+    setData({ ...data, title: item.title, description: item.description });
+  }, [item]);
+  const dispatch = useContext(ReducerContext);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
+
   const handleEdit = () => {
+    dispatch({
+      type: "Update",
+      task: data,
+      id: id,
+    });
+    console.log(data);
     setModal(!modal);
   };
   return (
@@ -26,11 +44,17 @@ const Modal = ({ setModal, modal }) => {
         </div>
 
         <input
+          value={data.title}
+          onChange={handleChange}
+          name="title"
           placeholder="Title"
           type="text"
           className="border w-[20rem] border-slate-300 rounded-[0.22rem] px-2 caret-indigo-500 outline-none focus:ring-1 ring-sky-500/50 py-2 focus:border-sky-500 md:w-[44rem]"
         />
         <textarea
+          value={data.description}
+          onChange={handleChange}
+          name="description"
           placeholder="Description"
           className="resize-none border w-[20rem] border-slate-300 rounded-[0.22rem] px-2 caret-indigo-500 outline-none focus:ring-1 ring-sky-500/50 py-2 focus:border-sky-500 md:w-[44rem]"
           rows={10}
