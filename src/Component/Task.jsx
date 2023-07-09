@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Modal from "./Modal";
-import { ReducerContext } from "../Context/TaskContext";
+import { ReducerContext, TasksContext } from "../Context/TaskContext";
 
 const Task = ({ item, index }) => {
   const [modal, setModal] = useState(false);
@@ -15,6 +15,7 @@ const Task = ({ item, index }) => {
       id: key,
     });
   };
+
   const handleColor = (e) => {
     if (e.target.value == "To Do")
       setColor(
@@ -31,7 +32,9 @@ const Task = ({ item, index }) => {
   };
   return (
     <>
-      {modal && <Modal setModal={setModal} modal={modal} />}
+      {modal && (
+        <Modal setModal={setModal} modal={modal} item={item} id={index} />
+      )}
       <div className="dropdown-container w-[20rem] space-y-4 p-2 border-t-4 border-indigo-300/80 shadow-md rounded-bl-md rounded-br-md lg:hover:shadow-xl transition ease-in-out">
         <h1 className="bg-indigo-100/80 text-[1.04rem] w-fit px-2 py-1 rounded-lg font-semibold text-gray-700">
           {item.title}
@@ -62,7 +65,9 @@ const Task = ({ item, index }) => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              onClick={() => setModal(!modal)}
+              onClick={() => {
+                setModal(!modal);
+              }}
             >
               <path
                 strokeLinecap="round"

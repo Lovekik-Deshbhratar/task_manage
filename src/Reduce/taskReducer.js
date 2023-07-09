@@ -11,6 +11,15 @@ const taskReducer = (task, action) => {
         },
       ];
     }
+    case "Update": {
+      return task.map((t, index) => {
+        if (index === action.id) {
+          return action.task;
+        } else {
+          return t;
+        }
+      });
+    }
     case "Delete": {
       return task.filter((item, index) => index !== action.id);
     }
