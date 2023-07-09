@@ -1,18 +1,28 @@
 import React, { useState, useContext } from "react";
 import Modal from "./Modal";
-import { ReducerContext, TasksContext } from "../Context/TaskContext";
+import {
+  ReducerContext,
+  TasksContext,
+  NotificationContext,
+} from "../Context/TaskContext";
 
 const Task = ({ item, index }) => {
   const [modal, setModal] = useState(false);
   const [color, setColor] = useState(
     "border-2 border-red-300 text-red-700 outline-none px-2 text-sm rounded-[0.2rem]"
   );
+  const { notificationHandler } = useContext(NotificationContext);
+
   const dispatch = useContext(ReducerContext);
 
   const handleDelete = (key) => {
     dispatch({
       type: "Delete",
       id: key,
+    });
+    notificationHandler({
+      type: "error",
+      message: "Task deleted successfully.",
     });
   };
 
