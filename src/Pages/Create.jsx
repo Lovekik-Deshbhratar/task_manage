@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { ReducerContext } from "../Context/TaskContext";
+import { NotificationContext } from "../Context/TaskContext";
 
 const Create = () => {
   const [data, setData] = useState({ title: "", description: "" });
   const dispatch = useContext(ReducerContext);
+  const { notificationHandler } = useContext(NotificationContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,6 +17,11 @@ const Create = () => {
       type: "Create",
       title: data.title,
       description: data.description,
+    });
+    setData({ title: "", description: "" });
+    notificationHandler({
+      type: "success",
+      message: "Task added successfully.",
     });
   };
   return (
