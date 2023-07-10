@@ -46,4 +46,4 @@ Make sure you have the following software installed on your machine:
 
 ### Deployment
 
-The application is deployed and can be accessed at link to deployed site.
+The application is deployed and can be accessed at https://task-manage-lovekik-deshbhratar.vercel.app/.
